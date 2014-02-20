@@ -997,4 +997,33 @@ template <> std::vector<cv::KeyPoint> MxArray::toVector() const;
  */
 template <> std::vector<cv::DMatch> MxArray::toVector() const;
 
+
+/** Translates data type definition used in OpenCV to that of Matlab.
+* @param classid data type of matlab's mxArray. e.g., mxDOUBLE_CLASS.
+* @return opencv's data type. e.g., CV_8U.
+*/
+const ConstMap<mxClassID, int> DepthOf = ConstMap<mxClassID, int>
+    (mxDOUBLE_CLASS, CV_64F)
+    (mxSINGLE_CLASS, CV_32F)
+    (mxINT8_CLASS, CV_8S)
+    (mxUINT8_CLASS, CV_8U)
+    (mxINT16_CLASS, CV_16S)
+    (mxUINT16_CLASS, CV_16U)
+    (mxINT32_CLASS, CV_32S)
+    (mxUINT32_CLASS, CV_32S)
+    (mxLOGICAL_CLASS, CV_8U);
+
+/** Translates data type definition used in Matlab to that of OpenCV.
+* @param depth data depth of opencv's Mat class. e.g., CV_32F.
+* @return data type of matlab's mxArray. e.g., mxDOUBLE_CLASS.
+*/
+const ConstMap<int,mxClassID> ClassIDOf = ConstMap<int,mxClassID>
+    (CV_64F, mxDOUBLE_CLASS)
+    (CV_32F, mxSINGLE_CLASS)
+    (CV_8S, mxINT8_CLASS)
+    (CV_8U, mxUINT8_CLASS)
+    (CV_16S, mxINT16_CLASS)
+    (CV_16U, mxUINT16_CLASS)
+    (CV_32S, mxINT32_CLASS);
+
 #endif // __MXARRAY_HPP__
