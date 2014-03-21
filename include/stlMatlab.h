@@ -132,6 +132,8 @@ template<typename T,std::wint_t N> struct MxTypes < std::array<T,N> >
 
 
 /** Internal std::vector converter.
+	type are the self defined array_type
+	T can be any compley type
 */
 template <typename type,typename T>
 struct STLtransfer{
