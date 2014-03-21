@@ -109,6 +109,12 @@ class MxArray
     template <typename T> explicit MxArray(const std::vector<T>& v) {
         p_ = STLtransfer<MxTypes<T>::array_type, T>::fromVector(v);
     }
+    
+    /** MxArray test constructor with cv::Vec<T,N>!!!!
+     */
+    template <typename T,int N> explicit MxArray(const cv::Vec<T,N>& p);
+    
+    
     /** MxArray constructor from cv::Point_<T>.
      * @param p cv::Point_<T> object.
      * @return two-element numeric MxArray.
@@ -603,7 +609,16 @@ class ConstMap
     std::map<T, U> m_;
 };
 
+template <typename T,int N> 
+MxArray::MxArray(const cv::Vec<T,N>& p):p_(mxCreateNumericMatrix(1, N, mxDOUBLE_CLASS,mxREAL))
+{
+    if (!p_)
+        mexErrMsgIdAndTxt("mexopencv:error", "Allocation error");
+    double *x = mxGetPr(p_);
+    for (int i =0;i<N;i++)
+		x[i]=p[i];
 
+}
 
 template <typename T>
 MxArray::MxArray(const cv::Point_<T>& p) :
